@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div >
     <canvas
       ref="canvas"
       id="smiley-canvas"
@@ -18,8 +18,8 @@
     </canvas>
     <div class="level is-mobile" style="width: 300px; margin: auto;">
       <div class="level-item has-text-centered">
-        <a @click="" class="level-left button is-success is-outlined">
-          Accept
+        <a @click="save" class="level-left button is-success is-outlined">
+          Save
         </a>
       </div>
       <div class="level-item has-text-centered">
@@ -54,9 +54,6 @@ export default {
     },
     ctx() {
       return this.canv.getContext('2d')
-    },
-    base64Png() {
-      return this.canv.toDataUrl('image/png')
     },
   },
   data() {
@@ -153,6 +150,13 @@ export default {
           this.renderCanvas()
         })
       }
+    },
+    base64Png() {
+      return this.canv.toDataURL('image/png')
+    },
+    save() {
+      this.$emit('save', this.base64Png())
+      this.clear()
     },
   },
   mounted() {

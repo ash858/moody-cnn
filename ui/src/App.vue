@@ -6,17 +6,12 @@
           Moody
         </h1>
       </div>
-      <SmileyCanvas />
     </div>
     <router-view />
   </div>
 </template>
 
 <script>
-import SmileyCanvas from './components/SmileyCanvas'
-export default {
-  components: { SmileyCanvas },
-}
 </script>
 
 <style lang="scss">
