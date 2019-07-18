@@ -1,12 +1,9 @@
 import numpy as np
 import os
-from sklearn.utils import shuffle
-from sklearn.model_selection import train_test_split
 import tensorflow as tf
-from tensorflow.python.estimator.model_fn import EstimatorSpec
+from sklearn.utils import shuffle
 
 from util import Config, ImgUtil
-
 
 class FaceDetectionModel:
     """
@@ -110,6 +107,7 @@ class FaceDetectionModel:
 
     @staticmethod
     def _conv_net_model(features, labels, mode):
+
         """
         Builds the conv-net model with the given features and labels.
 
@@ -161,7 +159,7 @@ class FaceDetectionModel:
         if mode == tf.estimator.ModeKeys.TRAIN:
             optimizer = tf.train.AdamOptimizer(learning_rate=FaceDetectionModel.learning_rate)
             train_op = optimizer.minimize(loss=loss, global_step=tf.train.get_global_step())
-            return EstimatorSpec(mode=mode, loss=loss, train_op=train_op)
+            return tf.estimator.EstimatorSpec(mode=mode, loss=loss, train_op=train_op)
 
         # Add evaluation metrics (for validation)
         eval_metrics = {
@@ -170,13 +168,14 @@ class FaceDetectionModel:
                                             name="accuracy")
         }
 
-        return EstimatorSpec(mode=mode, loss=loss, eval_metric_ops=eval_metrics)
+        return tf.estimator.EstimatorSpec(mode=mode, loss=loss, eval_metric_ops=eval_metrics)
 
 
 if __name__ == '__main__':
-    config_yml_path = os.path.dirname(os.path.realpath(__file__)) + '/config.yml'
+    config_yml_path = os.path.dirname(os.path.realpath(__file__)) + '/config/config.yml'
     print('config yml path', config_yml_path)
     config = Config(config_yml_path)
     model = FaceDetectionModel(config)
     model.evaluate()
+
 

@@ -8,7 +8,7 @@ from flask import request
 from flask_cors import CORS
 from io import BytesIO
 
-from face_detection_model import FaceDetectionModel
+from model.face_detection_model import FaceDetectionModel
 from util import Config, ImgUtil
 
 # Register the app

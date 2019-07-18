@@ -11,5 +11,5 @@ def hello():
 @app.route('/train/save')
 def train_save():
     if request.method == 'POST':
-
+        return 'save this'
 
