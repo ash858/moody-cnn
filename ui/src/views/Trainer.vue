@@ -2,7 +2,7 @@
   <div>
     <section class="name-input">
       <b-field label="Feature Name">
-        <b-input v-model="name" />
+        <b-input v-model="feature" />
       </b-field>
     </section>
     <SmileyCanvas @save="png => add(png)" />
@@ -23,6 +23,10 @@
 import SmileyCanvas from '../components/SmileyCanvas'
 import BField from 'buefy/src/components/field/Field'
 import BInput from 'buefy/src/components/input/Input'
+import axios from 'axios'
+
+const API_PATH = `http://localhost:5000/stage`
+
 export default {
   components: {
     BInput,
@@ -31,13 +35,18 @@ export default {
   },
   data() {
     return {
-      name: '',
+      feature: '',
       images: [],
     }
   },
   methods: {
-    add(png) {
+    async add(png) {
       this.images.push(png)
+      await axios.post(API_PATH, {
+        category: 'mood',
+        feature: this.feature,
+        data: png.split(',')[1],
+      })
     },
   },
 }
